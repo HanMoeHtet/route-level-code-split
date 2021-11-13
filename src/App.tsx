@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-function App() {
+const Home = React.lazy(
+  () => import(/* webpackChunkName: "Home" */ './pages/Home')
+);
+
+const About = React.lazy(
+  () => import(/* webpackChunkName: "About" */ './pages/About')
+);
+
+const home = <Home />;
+const about = <About />;
+
+interface AppProps {}
+
+const App: React.FC<AppProps> = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Suspense fallback={about}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={home}></Route>
+          <Route path="/about" element={about}></Route>
+        </Routes>
+      </BrowserRouter>
+    </React.Suspense>
   );
-}
+};
 
 export default App;
