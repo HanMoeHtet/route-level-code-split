@@ -1,17 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import About from './pages/About';
+import PageProvider from './composables/PageProvider';
+import { pages } from './pages';
 import Home from './pages/Home';
 
+console.log({ pages });
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <PageProvider pages={pages} />;
 }
 
 export default App;
