@@ -1,14 +1,29 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import About from './pages/About';
-import Home from './pages/Home';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const About = React.lazy(() => import('./pages/About'));
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
+        <Route
+          path="/"
+          element={
+            <React.Suspense fallback={null}>
+              <Home />
+            </React.Suspense>
+          }
+        ></Route>
+        <Route
+          path="/about"
+          element={
+            <React.Suspense fallback={null}>
+              <About />
+            </React.Suspense>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
