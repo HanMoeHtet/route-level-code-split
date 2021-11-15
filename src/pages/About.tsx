@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ModalContext } from '../composables/ModalProvider';
-import { usePage } from '../composables/Page';
+import { usePage } from '../composables/usePage';
+import { endLoading, startLoading } from '../services/nprogress';
 
 interface AboutProps {}
 
@@ -10,9 +11,9 @@ const About: React.FC<AboutProps> = () => {
   const { isOpen, updateIsOpen } = React.useContext(ModalContext);
 
   const toggleModal = React.useCallback(() => {
-    console.log(isOpen);
     updateIsOpen(!isOpen);
   }, [isOpen, updateIsOpen]);
+
   const render = React.useMemo(() => {
     return (
       <div>
@@ -22,7 +23,6 @@ const About: React.FC<AboutProps> = () => {
         <button
           onClick={() => {
             toggleModal();
-            console.log('hello');
           }}
         >
           Toggle Modal
@@ -34,6 +34,11 @@ const About: React.FC<AboutProps> = () => {
   React.useEffect(() => {
     onLoad(render);
   }, [onLoad, render]);
+
+  React.useEffect(() => {
+    endLoading();
+    return () => startLoading();
+  }, []);
 
   return render;
 };

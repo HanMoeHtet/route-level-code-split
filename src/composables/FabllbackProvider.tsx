@@ -18,7 +18,6 @@ export const FabllbackProvider: React.FC<FabllbackProviderProps> = ({
   const [fallback, setFallback] = React.useState<FallbackType>(null);
 
   const updateFallback = React.useCallback((fallback: FallbackType) => {
-    console.log({ fallback });
     setFallback(() => fallback);
   }, []);
 

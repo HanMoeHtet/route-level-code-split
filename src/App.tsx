@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FabllbackProvider } from './composables/FabllbackProvider';
 import { ModalProvider } from './composables/ModalProvider';
+import 'nprogress/nprogress.css';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const About = React.lazy(() => import('./pages/About'));

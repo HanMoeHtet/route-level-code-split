@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ModalContext } from '../composables/ModalProvider';
-import { usePage } from '../composables/Page';
+import { usePage } from '../composables/usePage';
+import { endLoading, startLoading } from '../services/nprogress';
 
 interface ContactProps {}
 
@@ -35,6 +36,11 @@ const Contact: React.FC<ContactProps> = () => {
   React.useEffect(() => {
     onLoad(render);
   }, [onLoad, render]);
+
+  React.useEffect(() => {
+    endLoading();
+    return () => startLoading();
+  }, []);
 
   return render;
 };

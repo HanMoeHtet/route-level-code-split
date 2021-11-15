@@ -16,7 +16,6 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const updateIsOpen = React.useCallback((isOpen: boolean) => {
-    console.log(isOpen);
     setIsOpen(() => isOpen);
   }, []);
 
