@@ -1,48 +1,27 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ModalContext } from '../composables/ModalProvider';
-import { usePage } from '../composables/usePage';
-import { endLoading, startLoading } from '../services/nprogress';
+import Page from '../composables/Page';
 
 interface ContactProps {}
 
 const Contact: React.FC<ContactProps> = () => {
-  const { onLoad } = usePage();
   const { isOpen, updateIsOpen } = React.useContext(ModalContext);
 
   const toggleModal = React.useCallback(() => {
-    console.log(isOpen);
     updateIsOpen(!isOpen);
   }, [isOpen, updateIsOpen]);
 
-  const render = React.useMemo(() => {
-    return (
+  return (
+    <Page>
       <div>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <h1>Contact</h1>
-        <button
-          onClick={() => {
-            toggleModal();
-            console.log('hello');
-          }}
-        >
-          Toggle Modal
-        </button>
+        <button onClick={toggleModal}>Toggle Modal</button>
       </div>
-    );
-  }, [toggleModal]);
-
-  React.useEffect(() => {
-    onLoad(render);
-  }, [onLoad, render]);
-
-  React.useEffect(() => {
-    endLoading();
-    return () => startLoading();
-  }, []);
-
-  return render;
+    </Page>
+  );
 };
 
 export default Contact;
