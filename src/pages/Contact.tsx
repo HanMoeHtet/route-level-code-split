@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { ModalContext } from '../composables/ModalProvider';
 import { usePage } from '../composables/Page';
 
-interface AboutProps {}
+interface ContactProps {}
 
-const About: React.FC<AboutProps> = () => {
+const Contact: React.FC<ContactProps> = () => {
   const { onLoad } = usePage();
   const { isOpen, updateIsOpen } = React.useContext(ModalContext);
 
@@ -13,12 +13,13 @@ const About: React.FC<AboutProps> = () => {
     console.log(isOpen);
     updateIsOpen(!isOpen);
   }, [isOpen, updateIsOpen]);
+
   const render = React.useMemo(() => {
     return (
       <div>
         <Link to="/">Home</Link>
-        <Link to="/contact">Contact</Link>
-        <h1>About</h1>
+        <Link to="/about">About</Link>
+        <h1>Contact</h1>
         <button
           onClick={() => {
             toggleModal();
@@ -38,4 +39,4 @@ const About: React.FC<AboutProps> = () => {
   return render;
 };
 
-export default About;
+export default Contact;
