@@ -1,46 +1,32 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Route level code splitting without flickering
 
-## Available Scripts
+  
 
-In the project directory, you can run:
+Many people had mentioned how to use route level code splitting for performance. In React, you can use it with React.lazy and React.Suspense. The main drawback of this approach is that the fallback prop of the Suepense can only be written something like
 
-### `yarn start`
+  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    <div>Loading...</div>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  
 
-### `yarn test`
+which should't exist in your million-dollar app  😏. You might have also seen some flickering issues which happen when page one is unmounted, fallback is shown and then page two is mounted, where all of these are happening relatively fast.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  
 
-### `yarn build`
+On the other hand, many sites like Facebook, Instragram and Youbute try to keep the previous page until the next page is downloaded and ready to be mounted, when navigating.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+I've tried many different approaches. You can see them in this repo's branches. The only one that have worked out for me is to update the fallback after a page is rendered(mounted) and to memorize the routes that are rendered.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  
 
-### `yarn eject`
+The idea here is that we must keep fallback as a state and update it when a page is renderd. But if we do so, there will be an infinite rendering because the page itself is a child of Suspense. When parent state changes, all children will be re-rendered,again updating the fallback. Here's when useMemo come into play. We'll have to memoize all child routes that are rendered so that when fallback is updated they are not rendered again. And when a page is rendered, we'll update the fallback but how?
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Again, we'll use useMemo to memoize the component(page) and render `the memoized` and update the fallback with `the memoized` so that they will be in sync. Both have to be a single instance because the page can also have popups and form states and when navigating,  those popups and form states must remain in fallback.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The above approach is not well tested though. I have only tested a fake modal. And if you have to include very complex UI components (like popovers and portals) , I wouldn't garuantee this works. Feel free to open an issue then.
