@@ -15,8 +15,7 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <Page>
       <div>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/about">About</Link> <Link to="/contact">Contact</Link>
         <h1>Home</h1>
         <button
           onClick={() => {

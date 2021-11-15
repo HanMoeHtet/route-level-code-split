@@ -15,8 +15,7 @@ const About: React.FC<AboutProps> = () => {
   return (
     <Page>
       <div>
-        <Link to="/">Home</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/">Home</Link> <Link to="/contact">Contact</Link>
         <h1>About</h1>
         <button
           onClick={() => {

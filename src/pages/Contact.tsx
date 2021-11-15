@@ -15,8 +15,7 @@ const Contact: React.FC<ContactProps> = () => {
   return (
     <Page>
       <div>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link to="/">Home</Link> <Link to="/about">About</Link>
         <h1>Contact</h1>
         <button onClick={toggleModal}>Toggle Modal</button>
       </div>
