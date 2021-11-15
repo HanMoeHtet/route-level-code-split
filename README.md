@@ -1,7 +1,7 @@
 
 # Route level code splitting without flickering
 
-  
+[Go to Demo](https://route-level-code-splitting.netlify.app/)  
 
 Many people had mentioned how to use route level code splitting for performance. In React, you can use it with React.lazy and React.Suspense. The main drawback of this approach is that the fallback prop of the Suepense can only be written something like
 
