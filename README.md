@@ -11,7 +11,7 @@ React.useEffect(() => {
     };
 }, []);
 ``` 
-3. But this is not enough, because let's say Page A is currently mounted, React is preparing to render Page B. Page A will only be mounted when Page B is ready. So the cleanup function of `useEffect` is called just before Page B is rendered which is not what we want. We want to show loading indicators when Page B is loading (when the link is clicked, or when `navigate` is called.)
+3. But this is not enough, because let's say Page A is currently mounted, React is preparing to render Page B. Page A will not be un-mounted until Page B is ready. So the cleanup function of `useEffect` is called just before Page B is rendered which is not what we want. We want to show loading indicators when Page B is loading (when the link is clicked, or when `navigate` is called.)
 
 4. Sadly, we cannot easily integrate it with `react-router-dom` yet. We need to override the `Link` component. as in [src/components/Link.jsx](src/components/Link.jsx). 
 
